@@ -115,7 +115,7 @@ class _InternetbankState extends State<Internetbank> {
                                   SizedBox(child: Image.network(qpaying11.logo,height: 80, width: 80,),),
                                   SizedBox(height: 10,),
                                   Expanded(child: Center(
-                                    child: Text(qpaying11.description),
+                                    child: Text(qpaying11.description, style: TextStyle(fontWeight: FontWeight.w600, ),),
                                   )),
                                 ],
                               ),
@@ -142,7 +142,6 @@ Future<List<Qpay>> internet() async {
     Uri.parse("http://192.168.1.110:3000/qpay/invoice"),
     headers: {
       'Content-Type': 'application/json',
-      //'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImNlM2UzNmI0LTAwMmItNDEwNi1iZWYzLWE4NDJkNGNhOGUzZCIsInNlc3Npb25fc2VjcmV0IjoiJDJiJDEwJEg3R3JuY3JEdmtGLmNjRWJ5eTZXTnUxNmZrQW9KTkg4bGxMYWRzMGlzR3Y0QW5NRnEwcFlDIiwiaWF0IjoxNjY0MzQ3OTIxLCJleHAiOjMzMjg3OTY2NDJ9.PghkodAFn4tEgku6PPlbMHhhpvBccHzHZE3NofAmQoU',
     },
     body: jsonEncode({
       //'amount': payingloan / 0.99,
