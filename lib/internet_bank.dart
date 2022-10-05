@@ -3,25 +3,20 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:core';
 import 'package:http/http.dart' as http;
+import 'package:qpay2/Internet.dart';
 import 'package:qpay2/qpay_list.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'colors.dart';
-
 class Internetbank extends StatefulWidget {
-
   const Internetbank({Key? key,}) : super(key: key);
-
   @override
   State<Internetbank> createState() => _InternetbankState();
 }
-
 class _InternetbankState extends State<Internetbank> {
   int payingloan = 0;
   List<Qpay> qpaylist = [];
   List<String> qpaystring = [];
   late List data;
-  
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -30,7 +25,7 @@ class _InternetbankState extends State<Internetbank> {
         centerTitle: true,
         backgroundColor: Colors.transparent,
         title: Text(
-          "Интернет банк",
+          "Жишээ",
           style: TextStyle(
               fontFamily: "Ubuntu",
               fontSize: 21,
@@ -118,7 +113,7 @@ class _InternetbankState extends State<Internetbank> {
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
                                   SizedBox(child: Image.network(qpaying11.logo,height: 80, width: 80,),),
-                                  SizedBox(width: 10,),
+                                  SizedBox(height: 10,),
                                   Expanded(child: Center(
                                     child: Text(qpaying11.description),
                                   )),
@@ -147,7 +142,7 @@ Future<List<Qpay>> internet() async {
     Uri.parse("http://192.168.1.110:3000/qpay/invoice"),
     headers: {
       'Content-Type': 'application/json',
-      'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImNlM2UzNmI0LTAwMmItNDEwNi1iZWYzLWE4NDJkNGNhOGUzZCIsInNlc3Npb25fc2VjcmV0IjoiJDJiJDEwJEg3R3JuY3JEdmtGLmNjRWJ5eTZXTnUxNmZrQW9KTkg4bGxMYWRzMGlzR3Y0QW5NRnEwcFlDIiwiaWF0IjoxNjY0MzQ3OTIxLCJleHAiOjMzMjg3OTY2NDJ9.PghkodAFn4tEgku6PPlbMHhhpvBccHzHZE3NofAmQoU',
+      //'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImNlM2UzNmI0LTAwMmItNDEwNi1iZWYzLWE4NDJkNGNhOGUzZCIsInNlc3Npb25fc2VjcmV0IjoiJDJiJDEwJEg3R3JuY3JEdmtGLmNjRWJ5eTZXTnUxNmZrQW9KTkg4bGxMYWRzMGlzR3Y0QW5NRnEwcFlDIiwiaWF0IjoxNjY0MzQ3OTIxLCJleHAiOjMzMjg3OTY2NDJ9.PghkodAFn4tEgku6PPlbMHhhpvBccHzHZE3NofAmQoU',
     },
     body: jsonEncode({
       //'amount': payingloan / 0.99,
@@ -172,12 +167,11 @@ Future<List<Qpay>> internet() async {
       }
       //print(qpaylist);
       setState(() {
+       // Navigator.push(context, MaterialPageRoute(builder: (context) => Internet()));
       });
     }
   });
   return qpaylist;
 }
-
-
 }
 
