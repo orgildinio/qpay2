@@ -167,7 +167,7 @@ Future<List<Qpay>> internet() async {
       }
       //print(qpaylist);
       setState(() {
-       // Navigator.push(context, MaterialPageRoute(builder: (context) => Internet()));
+       // Navigator.push(context, MaterialPageRoute(builder: (context) =>  Internet(qpay: [], index: 1,)));
       });
     }
   });
