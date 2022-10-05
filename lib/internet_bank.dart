@@ -21,13 +21,6 @@ class _InternetbankState extends State<Internetbank> {
   List<String> qpaystring = [];
   late List data;
   
-  Future<void> _launchurl(String url) async{
-    if(await canLaunchUrl(Uri.parse(url))){
-      await launchUrl(Uri.parse(url));
-    }else{
-      throw "Cant open URL";
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -55,8 +48,7 @@ class _InternetbankState extends State<Internetbank> {
         ),
         elevation: 0.0,
       ),
-      body:
-      Container(
+      body: Container(
         height: MediaQuery.of(context).size.height,
         width: MediaQuery.of(context).size.width,
         child: Column(
@@ -114,7 +106,6 @@ class _InternetbankState extends State<Internetbank> {
                         ),
                         onPressed: () async {
                           final url = Uri.parse(qpaying11.link);
-
                           if(!await launchUrl(url, )){
                             throw 'Could not launch $url';
                           }
@@ -137,7 +128,6 @@ class _InternetbankState extends State<Internetbank> {
                           ),
                         ),
                       ),
-
                     );
                   }
 
