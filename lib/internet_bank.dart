@@ -100,7 +100,7 @@ class _InternetbankState extends State<Internetbank> {
                           shadowColor: Colors.yellow[200],
                         ),
                         onPressed: () async {
-                          final url = Uri.parse(qpaying11.link);
+                          final url = Uri.parse("");
                           if(!await launchUrl(url, )){
                             throw 'Could not launch $url';
                           }
@@ -115,7 +115,7 @@ class _InternetbankState extends State<Internetbank> {
                                   SizedBox(child: Image.network(qpaying11.logo,height: 80, width: 80,),),
                                   SizedBox(height: 10,),
                                   Expanded(child: Center(
-                                    child: Text(qpaying11.description, style: TextStyle(fontWeight: FontWeight.w600, ),),
+                                    child: Text(qpaying11.description,),
                                   )),
                                 ],
                               ),
@@ -142,6 +142,7 @@ Future<List<Qpay>> internet() async {
     Uri.parse("http://192.168.1.110:3000/qpay/invoice"),
     headers: {
       'Content-Type': 'application/json',
+      'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjbGllbnRfaWQiOiJjZTNlMzZiNC0wMDJiLTQxMDYtYmVmMy1hODQyZDRjYThlM2QiLCJzZXNzaW9uX2lkIjoiZWJMU29hLVhxQlE3cUNidWNDc2tKSUMwR0lldWxFVFMiLCJpYXQiOjE2NjQ5NTk5NzQsImV4cCI6MzMzMDAwNjM0OH0.Mz5RdVj2ZP9mIdFekE3DmWD3XmOYdJRhnEstt9brdwI'
     },
     body: jsonEncode({
       //'amount': payingloan / 0.99,
@@ -166,7 +167,7 @@ Future<List<Qpay>> internet() async {
       }
       //print(qpaylist);
       setState(() {
-       // Navigator.push(context, MaterialPageRoute(builder: (context) =>  Internet(qpay: [], index: 1,)));
+
       });
     }
   });
