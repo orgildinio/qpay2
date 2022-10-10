@@ -3,7 +3,6 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:core';
 import 'package:http/http.dart' as http;
-import 'package:qpay2/Internet.dart';
 import 'package:qpay2/qpay_list.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'colors.dart';
@@ -100,9 +99,11 @@ class _InternetbankState extends State<Internetbank> {
                           shadowColor: Colors.yellow[200],
                         ),
                         onPressed: () async {
-                          final url = Uri.parse("");
-                          if(!await launchUrl(url, )){
-                            throw 'Could not launch $url';
+                          var url = Uri.parse(qpaying11.link);
+                          if(await canLaunchUrl(url)){
+                            await launchUrl(url);
+                          }else{
+                            throw "Could not launch $url";
                           }
                         },
                         child: InkResponse(
@@ -134,44 +135,43 @@ class _InternetbankState extends State<Internetbank> {
       ),
     );
   }
-Future<List<Qpay>> internet() async {
-  setState(() {
-    qpaylist.clear();
-  });
-  http.post(
-    Uri.parse("http://192.168.1.110:3000/qpay/invoice"),
-    headers: {
-      'Content-Type': 'application/json',
-      'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjbGllbnRfaWQiOiJjZTNlMzZiNC0wMDJiLTQxMDYtYmVmMy1hODQyZDRjYThlM2QiLCJzZXNzaW9uX2lkIjoiZWJMU29hLVhxQlE3cUNidWNDc2tKSUMwR0lldWxFVFMiLCJpYXQiOjE2NjQ5NTk5NzQsImV4cCI6MzMzMDAwNjM0OH0.Mz5RdVj2ZP9mIdFekE3DmWD3XmOYdJRhnEstt9brdwI'
-    },
-    body: jsonEncode({
-      //'amount': payingloan / 0.99,
-      'amount': 100 / 0.99,
-    }),
-  ).then((http.Response response) {
-    final int statusCode = response.statusCode;
-    if (statusCode < 200 || statusCode > 400 || json == null) {
-      throw Exception("error");
-    }
-    var listData = json.decode(response.body);
-    data = listData['urls'];
-    if(data != null) {
-      for(Map respdata in data ) {
-        Qpay qpay= Qpay(respdata['description'], respdata['logo'], respdata['link']);
-        qpaylist.add(qpay);
-        qpaystring.addAll([
-          respdata['description'],
-          respdata['logo'],
-          respdata['link']
-        ]);
+  Future<List<Qpay>> internet() async {
+    setState(() {
+      qpaylist.clear();
+    });
+    http.post(
+      Uri.parse("http://192.168.1.110:3000/qpay/invoice"),
+      headers: {
+        'Content-Type': 'application/json',
+        //'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjbGllbnRfaWQiOiJjZTNlMzZiNC0wMDJiLTQxMDYtYmVmMy1hODQyZDRjYThlM2QiLCJzZXNzaW9uX2lkIjoiZWJMU29hLVhxQlE3cUNidWNDc2tKSUMwR0lldWxFVFMiLCJpYXQiOjE2NjQ5NTk5NzQsImV4cCI6MzMzMDAwNjM0OH0.Mz5RdVj2ZP9mIdFekE3DmWD3XmOYdJRhnEstt9brdwI'
+      },
+      body: jsonEncode({
+        //'amount': payingloan / 0.99,
+        'amount': 100 / 0.99,
+      }),
+    ).then((http.Response response) {
+      final int statusCode = response.statusCode;
+      if (statusCode < 200 || statusCode > 400 || json == null) {
+        throw Exception("error");
       }
-      //print(qpaylist);
-      setState(() {
+      var listData = json.decode(response.body);
+      data = listData['urls'];
+      if(data != null) {
+        for(Map respdata in data ) {
+          Qpay qpay= Qpay(respdata['description'], respdata['logo'], respdata['link']);
+          qpaylist.add(qpay);
+          qpaystring.addAll([
+            respdata['description'],
+            respdata['logo'],
+            respdata['link']
+          ]);
+        }
+        //print(qpaylist);
+        setState(() {
 
-      });
-    }
-  });
-  return qpaylist;
+        });
+      }
+    });
+    return qpaylist;
+  }
 }
-}
-
